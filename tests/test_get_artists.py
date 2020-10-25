@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import pytest
-from pymusiclibrary import getArtistsAlbumsSongs
+from pymusiclibrary import PyMusicLibrary
 
 
 @pytest.fixture
@@ -35,7 +35,7 @@ def test_get_artists_1():
     Tests if the check for artists in non existing folder returns 0 artists.
     :return: None
     """
-    artists = getArtistsAlbumsSongs.get_artists("C:\\DummyTestFolder")
+    artists = PyMusicLibrary.get_artists("C:\\DummyTestFolder")
     assert len(artists) == 0, "Folder does not exist!"
 
 
@@ -45,7 +45,7 @@ def test_get_artists_2(create_test_env):
     folder.
     :return: None
     """
-    artists = getArtistsAlbumsSongs.get_artists(os.getcwd() + "\\dummy_file.txt\\")
+    artists = PyMusicLibrary.get_artists(os.getcwd() + "\\dummy_file.txt\\")
     assert len(artists) == 0, "Path to file was given, not to a folder!"
 
 
@@ -54,7 +54,7 @@ def test_get_artists_3(create_test_env):
     Tests if the check for artists in existing folder that has sub-folders (artists) returns not zero.
     :return: None
     """
-    artists = getArtistsAlbumsSongs.get_artists(os.getcwd() + "\\Music")
+    artists = PyMusicLibrary.get_artists(os.getcwd() + "\\Music")
     assert len(artists) != 0, "Folder is not empty!"
 
 
@@ -63,7 +63,7 @@ def test_get_artists_4(create_test_env):
     Tests if the check for artists in existing folder that has 3 sub-folders (artists) returns exactly 3 artists.
     :return:
     """
-    artists = getArtistsAlbumsSongs.get_artists(os.getcwd() + "\\Music")
+    artists = PyMusicLibrary.get_artists(os.getcwd() + "\\Music")
     assert len(artists) == 3, "3 artists exists!"
 
 
@@ -72,5 +72,5 @@ def test_get_artists_5(create_test_env):
     Tests if the check for artists in existing folder that has no sub-folders (artists) returns exactly 0 artists.
     :return:
     """
-    artists = getArtistsAlbumsSongs.get_artists(os.getcwd() + "\\Music\\Artist1")
+    artists = PyMusicLibrary.get_artists(os.getcwd() + "\\Music\\Artist1")
     assert len(artists) == 0, "0 artists exists!"
