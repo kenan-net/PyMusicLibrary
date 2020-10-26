@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 import datetime
 from . import helpers
 from typing import List
@@ -7,8 +8,12 @@ from typing import List
 
 class PyMusicLibrary:
     """
+    This class provides methods to create a simple but usable music library.
+
     Attributes
     ----------
+    root
+        Path to starting folder where all the music is stored.
 
     Methods
     -------
@@ -30,7 +35,13 @@ class PyMusicLibrary:
         """
         # Todo : add tests here if the path exists, if the path is folder etc. If basic conditions are not met, it must
         #  fail!
-        self.root = startingFolder
+        self._initialized = False
+        if (not os.path.exists(startingFolder)) or (not os.path.isdir(startingFolder)):
+            print("Init failed! Path does not exist or it is not a folder!")
+            self.root = startingFolder = None
+        else:
+            self.root = startingFolder
+            self._initialized = True
         self._artists = None
 
     def get_artists(self) -> List:
@@ -51,7 +62,11 @@ class PyMusicLibrary:
         :rtype: List
         """
         artists = []
+        if not self._initialized:
+            print("Get artists: not init")
+            return artists
         self._artists = helpers.get_folders(self.root)
+        print("Get artists: {0}".format(len(self._artists)))
         return self._artists
 
     def get_albums(self, artistName: str) -> List:
@@ -71,6 +86,17 @@ class PyMusicLibrary:
         :rtype: List
         """
         albums = []
+        print("Get Albums started")
+        if not self._initialized:
+            print("not initialized")
+            return albums
+        if self._artists is None:
+            print("No artists!")
+            return albums
+        print("Artists in library: {0}".format(len(self._artists)))
+        if artistName not in self._artists:
+            print("Artist not found")
+            return albums
         albums = helpers.get_folders(self.root + "\\" + artistName)
         return albums
 
@@ -82,6 +108,8 @@ class PyMusicLibrary:
         :rtype: List
         """
         songs = []
+        if not self._initialized:
+            return songs
         songs = helpers.get_files(startingFolder)
         return songs
 

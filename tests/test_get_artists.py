@@ -76,6 +76,6 @@ def test_get_artists_5(create_test_env):
     Tests if the check for artists in existing folder that has no sub-folders (artists) returns exactly 0 artists.
     :return:
     """
-    myMusicLibrary = PyMusicLibrary.PyMusicLibrary(os.getcwd() + "\\Music\\Artist1")
+    myMusicLibrary = PyMusicLibrary.PyMusicLibrary(os.getcwd() + "\\Music\\Artist3")
     artists = myMusicLibrary.get_artists()
     assert len(artists) == 0, "0 artists exists!"

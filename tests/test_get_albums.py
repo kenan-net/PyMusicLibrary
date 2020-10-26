@@ -30,11 +30,21 @@ def create_test_env():
         return True
 
 
-def test_get_albums_1(create_test_env):
+def test_get_albums_01(create_test_env):
     """
-
     :return:
     """
     myMusicLibrary = PyMusicLibrary.PyMusicLibrary(os.getcwd() + "\\Music\\")
+    myMusicLibrary.get_artists()
     albums = myMusicLibrary.get_albums("Artist1")
     assert len(albums) == 3, "There are 3 albums of Artist 1"
+
+
+def test_get_albums_02(create_test_env):
+    """
+    :return:
+    """
+    myMusicLibrary = PyMusicLibrary.PyMusicLibrary(os.getcwd() + "\\Music\\")
+    myMusicLibrary.get_artists()
+    albums = myMusicLibrary.get_albums("dummy artist")
+    assert len(albums) == 0, "This artist does not exist, therefore there should be 0 albums."
